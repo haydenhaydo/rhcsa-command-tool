@@ -12,7 +12,7 @@ const Test = () => {
   const [attempts, setAttempts] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/questions')
+    fetch('/api/questions')
       .then((response) => response.json())
       .then((data) => {
         setQuestions(data);
@@ -47,7 +47,7 @@ const Test = () => {
   useEffect(() => {
     if (questions.length > 0) {
       const currentQuestion = questions[currentQuestionIndex];
-      fetch(`http://localhost:5000/api/attempts/${currentQuestion.id}`)
+      fetch(`/api/attempts/${currentQuestion.id}`)
         .then((res) => res.json())
         .then((attemptsData) => {
           setAttempts(attemptsData);
@@ -58,7 +58,7 @@ const Test = () => {
 
   const clearAttemptsForQuestion = async (questionId) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/attempts/${questionId}`, {
+      const response = await fetch(`/api/attempts/${questionId}`, {
         method: 'DELETE',
       });
       if (response.ok) {
