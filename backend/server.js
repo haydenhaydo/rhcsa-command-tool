@@ -11,11 +11,15 @@ const UserAttempt = require('./models/UserAttempt');
 const app = express();
 
 // Middleware
-const corsOptions = {
-  origin: '*', // Allow all origins
-  optionsSuccessStatus: 200
-};
-app.use(cors(corsOptions));
+const allowedOrigin = process.env.CORS_ALLOWED_ORIGIN;
+if (allowedOrigin) {
+  console.log(`CORS enabled for origin: ${allowedOrigin}`);
+  const corsOptions = {
+    origin: allowedOrigin,
+    optionsSuccessStatus: 200,
+  };
+  app.use(cors(corsOptions));
+}
 app.use(express.json());
 
 // Connect to MongoDB

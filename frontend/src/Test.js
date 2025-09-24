@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Question from './Question';
 
+const apiBaseUrl = process.env.REACT_APP_API_BASE_URL || '';
+
 const Test = () => {
   const [questions, setQuestions] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(() => {
@@ -12,7 +14,7 @@ const Test = () => {
   const [attempts, setAttempts] = useState([]);
 
   useEffect(() => {
-    fetch('/api/questions')
+    fetch(`${apiBaseUrl}/api/questions`)
       .then((response) => response.json())
       .then((data) => {
         setQuestions(data);
@@ -47,7 +49,7 @@ const Test = () => {
   useEffect(() => {
     if (questions.length > 0) {
       const currentQuestion = questions[currentQuestionIndex];
-      fetch(`/api/attempts/${currentQuestion.id}`)
+      fetch(`${apiBaseUrl}/api/attempts/${currentQuestion.id}`)
         .then((res) => res.json())
         .then((attemptsData) => {
           setAttempts(attemptsData);
@@ -58,7 +60,7 @@ const Test = () => {
 
   const clearAttemptsForQuestion = async (questionId) => {
     try {
-      const response = await fetch(`/api/attempts/${questionId}`, {
+      const response = await fetch(`${apiBaseUrl}/api/attempts/${questionId}`, {
         method: 'DELETE',
       });
       if (response.ok) {
